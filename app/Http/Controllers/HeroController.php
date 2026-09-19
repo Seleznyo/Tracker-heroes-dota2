@@ -13,4 +13,8 @@ class HeroController extends Controller
             'heroes' => Hero::orderBy('name')->get(),
         ]);
     }
+
+    public function show(Hero $hero) {
+        return Inertia::render('heroes/show', ['hero' => $hero,]);
+    }
 }

@@ -34,5 +34,9 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'stratz' => [
+        'url' => env('STRATZ_API_URL'),
+        'token' => env('STRATZ_API_KEY')
+    ]
 
 ];

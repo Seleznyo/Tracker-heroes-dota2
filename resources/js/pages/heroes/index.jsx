@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 
 export default function Index({ heroes }) {
     return (
@@ -6,7 +7,7 @@ export default function Index({ heroes }) {
             <div>
                 {heroes.map(hero => (
                     <div>
-                        <p>{hero.name}</p>
+                        <Link href={`heroes/${hero.name}`}>{hero.name}</Link>
                         <p>{hero.slug}</p>
                     </div>
                 ))}
@@ -14,3 +15,4 @@ export default function Index({ heroes }) {
         </div>
 
     );
+}
