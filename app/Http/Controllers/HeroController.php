@@ -15,6 +15,6 @@ class HeroController extends Controller
     }
 
     public function show(Hero $hero) {
-        return Inertia::render('heroes/show', ['hero' => $hero,]);
+        return Inertia::render('heroes/show', ['hero' => $hero]);
     }
 }

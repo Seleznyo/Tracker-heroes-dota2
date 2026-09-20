@@ -1,16 +1,33 @@
 <?php
 
 use App\Http\Controllers\HeroController;
+use App\Services\StratzService;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'welcome')->name('home');
 
-Route::get('/heroes', [HeroController::class, 'index'])->name('heroes');
+Route::get('/heroes', [HeroController::class, 'index'])->name('heroes.index');
 
-Route::get('/heroes/{name}', [HeroController::class, 'show'])->name('heroes.show');
+Route::get('/heroes/{hero}', [HeroController::class, 'show'])->name('heroes.show');
+
+Route::get('/stratz-test', function (StratzService $stratz){
+$query = <<<'GRAPHQL'
+    query {
+        constants {
+            heroes {
+                id
+                name
+                displayName
+            }
+        }
+    }
+    GRAPHQL;
+
+    return $stratz->query($query);
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
+   Route::inertia('dashboard', 'dashboard')->name('dashboard');
 });
 
 require __DIR__.'/settings.php';
