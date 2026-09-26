@@ -15,6 +15,11 @@ class HeroController extends Controller
     }
 
     public function show(Hero $hero) {
+        
+        $hero->load(['heroStats' => function($query) {
+            $query->orderByDesc('month');
+        }]);
+        //dd($hero->heroStats[0]);
         return Inertia::render('heroes/show', ['hero' => $hero]);
     }
 }

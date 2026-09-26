@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 
-use function Pest\Laravel\withToken;
 
 class StratzService
 {

@@ -1,14 +1,27 @@
 import { Link } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function Index({ heroes }) {
+    const [search, setSearch] = useState('')
+    const filtredHeroes = heroes.filter((hero) => hero.slug.toLowerCase().includes(search.toLowerCase()))
     return (
-        <div className="bg-mist-800 text-white">
+        <div className="min-h-screen bg-mist-800 text-white">
             <div className="container mx-auto">
                 <h1 className="mb-8 pt-8 text-3xl font-bold">
                     Tracker Heroes DOTA 2
                 </h1>
+                <div className="mb-6">
+                    <input
+                        type="text"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Search heroes..."
+                        className="w-full rounded-lg bg-mist-900 px-4 py-3 text-white outline-none ring-1 ring-gray-800 focus:ring-gray-600"
+                    />
+                </div>
+
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {heroes.map((hero) => (
+                    {filtredHeroes.length > 0? (filtredHeroes.map((hero) => (
                         <Link
                             href={`heroes/${hero.slug}`}
                             key={hero.id}
@@ -24,7 +37,11 @@ export default function Index({ heroes }) {
                                     hero.slug.slice(1)}
                             </p>
                         </Link>
-                    ))}
+                    ))) : (
+                        <p className="col-span-full text-center text-mist-400">
+                            Heroes not found
+                        </p>
+                    )}
                 </div>
             </div>
         </div>
