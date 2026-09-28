@@ -21,7 +21,7 @@ class Hero extends Model
         return $this->hasMany(HeroMatchup::class);
     }
 
-    public function OpponentHeroMatchups(): HasMany {
+    public function opponentHeroMatchups(): HasMany {
         return $this->hasMany(HeroMatchup::class, 'opponent_hero_id');
     }
 }

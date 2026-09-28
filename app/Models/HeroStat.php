@@ -28,4 +28,5 @@ class HeroStat extends Model
     {
         return $this->belongsTo(Hero::class);
     }
+
 }

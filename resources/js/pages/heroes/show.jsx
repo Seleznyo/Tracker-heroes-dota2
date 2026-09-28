@@ -1,15 +1,15 @@
 import { Link } from "@inertiajs/react";
-import {formatMonth} from './../../../utils/date.js';
+import { formatMonth } from './../../../utils/date.js';
+import MatchupCard from "../../components/MatchupCard.jsx";
 
-
-export default function Show({ hero }) {
+export default function Show({ hero, counterPicks, goodAgainst }) {
     const latestStat = hero.hero_stats[0] ?? null;
     return (
         <div className="min-h-screen  bg-mist-800 text-white">
             <div className="mx-auto max-w-3xl">
                 <Link
                     href="/heroes"
-                    className="inline-block text-2xl m-8 text-mist-400 transition hover:text-white"
+                    className="inline-block text-2xl m-8 text-mist-400 transition hover:text-white "
                 >
                     &#8592; All heroes
                 </Link>
@@ -44,52 +44,67 @@ export default function Show({ hero }) {
                         </div>
                     </div>
                 </div>
-                <div className="">
-                    <h2 className="m-8 mb-0 text-2xl font-bold">
+    
+                <div className="mt-4">
+                    <h2 className="mb-6 px-8 text-2xl font-bold">
                         Monthly statistics
                     </h2>
-                    <div className="space-y-2 p-8">
-                        {
-                            hero.hero_stats.map((stat) => {
-                                const month = formatMonth(stat.month)
-                                return (
-                                    <div
-                                        key={stat.id}
-                                        className="grid grid-cols-4 gap-4 rounded-lg bg-mist-800 p-4"
-                                    >
-                                        <div>
-                                            <p className="text-sm text-mist-400">Month</p>
-                                            <p className="font-semibold">{month}</p>
-                                        </div>
 
-                                        <div>
-                                            <p className="text-sm text-mist-400">Winrate</p>
-                                            <p className="font-semibold">
-                                                {stat.winrate}%
-                                            </p>
-                                        </div>
+                    <div className="overflow-hidden rounded-3xl border border-mist-700/50 bg-mist-700/30">
+                        {hero.hero_stats.map((stat, index) => {
+                            const month = formatMonth(stat.month);
 
-                                        <div>
-                                            <p className="text-sm text-mist-400">Wins</p>
-                                            <p className="font-semibold">
-                                                {stat.win_count.toLocaleString()}
-                                            </p>
-                                        </div>
-
-                                        <div>
-                                            <p className="text-sm text-mist-400">Matches</p>
-                                            <p className="font-semibold">
-                                                {stat.match_count.toLocaleString()}
-                                            </p>
-                                        </div>
+                            return (
+                                <div
+                                    key={stat.id}
+                                    className={`grid grid-cols-4 gap-4 px-6 py-5 transition hover:bg-mist-700/40 ${index !== hero.hero_stats.length - 1
+                                            ? 'border-b border-mist-700/50'
+                                            : ''
+                                        }`}
+                                >
+                                    <div>
+                                        <p className="text-xs uppercase tracking-wide text-mist-400">
+                                            Month
+                                        </p>
+                                        <p className="mt-1 font-semibold">
+                                            {month}
+                                        </p>
                                     </div>
-                                );
 
-                            }
-                            )
-                        }
+                                    <div>
+                                        <p className="text-xs uppercase tracking-wide text-mist-400">
+                                            Winrate
+                                        </p>
+                                        <p className="mt-1 font-semibold">
+                                            {stat.winrate}%
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p className="text-xs uppercase tracking-wide text-mist-400">
+                                            Wins
+                                        </p>
+                                        <p className="mt-1 font-semibold">
+                                            {stat.win_count.toLocaleString()}
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p className="text-xs uppercase tracking-wide text-mist-400">
+                                            Matches
+                                        </p>
+                                        <p className="mt-1 font-semibold">
+                                            {stat.match_count.toLocaleString()}
+                                        </p>
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
+
+                <MatchupCard matchups={counterPicks} label='Counter picks' />
+                <MatchupCard matchups={goodAgainst} label='Good against' />
             </div>
         </div>
     );
