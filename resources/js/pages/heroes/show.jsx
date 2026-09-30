@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { formatMonth } from './../../../utils/date.js';
 import MatchupCard from "../../components/MatchupCard.jsx";
 
@@ -23,6 +23,15 @@ export default function Show({ hero, counterPicks, goodAgainst }) {
                     <div className="p-4">
                         <h1 className="text-4xl font-bold"
                         >{hero.slug[0].toUpperCase() + hero.slug.slice(1)}</h1>
+                        <button
+                            type="button"
+                            onClick={() => {
+                                router.post(`/heroes/${hero.slug}/favorite`);
+                            }}
+                            className="my-4 rounded-lg bg-yellow-500 px-4 py-2 font-semibold text-black transition hover:bg-yellow-400"
+                        >
+                            ⭐ Add to favorites
+                        </button>
                         <p className="text-mist-400">STRATZ ID: {hero.stratz_id}</p>
                         <div className="mt-6 grid grid-cols-4 gap-4">
                             <div className="rounded-3xl bg-mist-600 p-4">
@@ -44,7 +53,7 @@ export default function Show({ hero, counterPicks, goodAgainst }) {
                         </div>
                     </div>
                 </div>
-    
+
                 <div className="mt-4">
                     <h2 className="mb-6 px-8 text-2xl font-bold">
                         Monthly statistics
@@ -58,8 +67,8 @@ export default function Show({ hero, counterPicks, goodAgainst }) {
                                 <div
                                     key={stat.id}
                                     className={`grid grid-cols-4 gap-4 px-6 py-5 transition hover:bg-mist-700/40 ${index !== hero.hero_stats.length - 1
-                                            ? 'border-b border-mist-700/50'
-                                            : ''
+                                        ? 'border-b border-mist-700/50'
+                                        : ''
                                         }`}
                                 >
                                     <div>
