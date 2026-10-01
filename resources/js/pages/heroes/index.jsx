@@ -1,5 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
+import AppLayout from '@/layouts/AppLayout';
+
 
 export default function Index({ heroes }) {
     const [search, setSearch] = useState('')
@@ -7,10 +9,8 @@ export default function Index({ heroes }) {
     return (
         <div className="min-h-screen bg-mist-800 text-white">
             <div className="container mx-auto">
-                <h1 className="mb-8 pt-8 text-3xl font-bold">
-                    Tracker Heroes DOTA 2
-                </h1>
-                <div className="mb-6">
+                
+                <div className="my-6">
                     <input
                         type="text"
                         value={search}
@@ -21,17 +21,20 @@ export default function Index({ heroes }) {
                 </div>
 
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {filtredHeroes.length > 0? (filtredHeroes.map((hero) => (
+                    {filtredHeroes.length > 0 ? (filtredHeroes.map((hero) => (
                         <Link
                             href={`heroes/${hero.slug}`}
                             key={hero.id}
-                            className="group m-2 overflow-hidden rounded-4xl border-solid transition hover:-translate-y-1 hover:bg-mist-700"
+                            className="group m-2 overflow-hidden rounded-4xl transition hover:-translate-y-1 hover:bg-mist-700"
                         >
-                            <img
-                                src={hero.image}
-                                alt={hero.slug}
-                                className="w-full object-cover transition duration-200 group-hover:scale-105"
-                            />
+                            <div className="overflow-hidden rounded-4xl">
+                                <img
+                                    src={hero.image}
+                                    alt={hero.slug}
+                                    className="w-full object-cover transition duration-200 group-hover:scale-105"
+                                />
+                            </div>
+
                             <p className="p-3 text-2xl font-semibold">
                                 {hero.slug[0].toUpperCase() +
                                     hero.slug.slice(1)}
@@ -47,3 +50,9 @@ export default function Index({ heroes }) {
         </div>
     );
 }
+
+Index.layout = page => (
+    <AppLayout>
+        {page}
+    </AppLayout>
+);

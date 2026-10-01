@@ -49,6 +49,6 @@ class User extends Authenticatable
     }
     public function heroes(): BelongsToMany
     {
-        return $this->belongsToMany(Hero::class, 'favorite_heroes');
+        return $this->belongsToMany(Hero::class, 'favorite_heroes')->withTimestamps();
     }
 }

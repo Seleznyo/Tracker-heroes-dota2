@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hero;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class HeroController extends Controller
@@ -26,6 +28,18 @@ class HeroController extends Controller
                 $query->with('opponentHero')
                     ->where('match_count', '>=', 100);
             },
+            'items' => function ($query) {
+                $query
+                    ->orderByDesc('match_count')
+                    ->limit(6)
+                    ->with('item');
+            },
+            'startingItems' => function ($query) {
+                $query
+                    ->orderByDesc('match_count')
+                    ->limit(6)
+                    ->with('item');
+            }
         ]);
         $counterPicks = $hero->heroMatchups
             ->sortBy('average_win')
@@ -39,13 +53,20 @@ class HeroController extends Controller
             ->values()
             ->toArray();
 
-        //dd($hero->heroMatchups->take(5)->toArray());
+        /** @var User $user **/
+        $user = Auth::user();
+        $isFavorite = Auth::check()
+            ? $user->heroes()->where('hero_id', $hero->id)->exists()
+            : false;
+
+        //dd($hero->toArray());
         //dd($counterPicks->toArray());
 
         return Inertia::render('heroes/show', [
             'hero' => $hero,
             'counterPicks' => $counterPicks,
             'goodAgainst' => $goodAgainst,
+            'isFavorite' => $isFavorite
         ]);
     }
 }

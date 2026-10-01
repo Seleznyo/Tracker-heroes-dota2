@@ -16,14 +16,21 @@ class TestHeroStratz extends Command
      */
     public function handle(StratzService $stratz)
     {
+        $hero = 1;
         $query = <<<GRAPHQL
         query{
             heroStats{
-                winMonth{
+                itemFullPurchase(heroId:{$hero}){
                     heroId
-                    month
-                    winCount
+                    itemId
                     matchCount
+                    winsAverage
+                }
+                itemStartingPurchase(heroId:{$hero}){
+                    heroId
+                    itemId
+                    matchCount
+                    winsAverage
                 }
             }
         }

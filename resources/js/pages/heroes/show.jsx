@@ -1,8 +1,12 @@
 import { Link, router } from "@inertiajs/react";
 import { formatMonth } from './../../../utils/date.js';
 import MatchupCard from "../../components/MatchupCard.jsx";
+import AppLayout from '@/layouts/AppLayout';
+import StartingItems from "../../components/StartingItems";
+import BuildItems from "../../components/BuildItems";
 
-export default function Show({ hero, counterPicks, goodAgainst }) {
+
+export default function Show({ hero, counterPicks, goodAgainst, isFavorite }) {
     const latestStat = hero.hero_stats[0] ?? null;
     return (
         <div className="min-h-screen  bg-mist-800 text-white">
@@ -26,11 +30,18 @@ export default function Show({ hero, counterPicks, goodAgainst }) {
                         <button
                             type="button"
                             onClick={() => {
-                                router.post(`/heroes/${hero.slug}/favorite`);
+                                isFavorite ?
+                                    router.delete(`/heroes/${hero.slug}/favorite`, {
+                                        preserveScroll: true,
+                                    })
+                                    :
+                                    router.post(`/heroes/${hero.slug}/favorite`, {}, {
+                                        preserveScroll: true
+                                    });
                             }}
                             className="my-4 rounded-lg bg-yellow-500 px-4 py-2 font-semibold text-black transition hover:bg-yellow-400"
                         >
-                            ⭐ Add to favorites
+                            {isFavorite ? '⭐ Remove from favorites' : '⭐ Add to favorites'}
                         </button>
                         <p className="text-mist-400">STRATZ ID: {hero.stratz_id}</p>
                         <div className="mt-6 grid grid-cols-4 gap-4">
@@ -53,6 +64,17 @@ export default function Show({ hero, counterPicks, goodAgainst }) {
                         </div>
                     </div>
                 </div>
+
+                <StartingItems
+                    items={hero.starting_items}
+                />
+
+
+                <BuildItems
+                    items={hero.items}
+                />
+                <MatchupCard matchups={counterPicks} label='Counter picks' />
+                <MatchupCard matchups={goodAgainst} label='Good against' />
 
                 <div className="mt-4">
                     <h2 className="mb-6 px-8 text-2xl font-bold">
@@ -112,9 +134,13 @@ export default function Show({ hero, counterPicks, goodAgainst }) {
                     </div>
                 </div>
 
-                <MatchupCard matchups={counterPicks} label='Counter picks' />
-                <MatchupCard matchups={goodAgainst} label='Good against' />
             </div>
         </div>
     );
 }
+
+Show.layout = page => (
+    <AppLayout>
+        {page}
+    </AppLayout>
+);

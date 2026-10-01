@@ -29,7 +29,16 @@ class Hero extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'favorite_heroes');
+        return $this->belongsToMany(User::class, 'favorite_heroes')->withTimestamps();
+    }
+
+    public function startingItems() : HasMany
+    {
+        return $this->hasMany(HeroStartingItem::class);
+    }
+    public function items() : HasMany
+    {
+        return $this->hasMany(HeroItem::class);
     }
     
 }
