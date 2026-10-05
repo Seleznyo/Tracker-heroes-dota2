@@ -75,7 +75,7 @@ STRATZ_API_TOKEN=your_token
 После первого запуска необходимо выполнить миграции:
 
 ```bash
-docker compose exec app php artisan migrate
+php artisan migrate
 ```
 
 ## Синхронизация данных
