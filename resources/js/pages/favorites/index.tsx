@@ -1,9 +1,19 @@
 import { Link, router } from "@inertiajs/react";
 import AppLayout from '@/layouts/AppLayout';
 
-export default function Index({ heroes }) {
+type Hero = {
+    id: number;
+    slug: string;
+    image: string;
+}
 
-    function removeFavorite(hero) {
+type Props = {
+    heroes: Hero[];
+}
+
+export default function Index({ heroes } : Props) {
+
+    function removeFavorite(hero: Hero) {
         router.delete(`/heroes/${hero.slug}/favorite`, {
             preserveScroll: true,
         });
@@ -85,7 +95,7 @@ export default function Index({ heroes }) {
     );
 }
 
-Index.layout = page => (
+Index.layout = (page : React.ReactNode)=> (
     <AppLayout>
         {page}
     </AppLayout>

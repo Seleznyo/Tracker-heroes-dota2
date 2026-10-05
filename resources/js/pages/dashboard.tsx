@@ -1,8 +1,18 @@
 import AppLayout from '@/layouts/AppLayout';
 import { Link } from "@inertiajs/react";
 
+type Hero = {
+    id: number;
+    slug: string;
+    image: string;
+}
 
-export default function Dashboard({ heroes, favoriteCount }) {
+type Props = {
+    heroes: Hero[];
+    favoriteCount: number;
+}
+
+export default function Dashboard({ heroes, favoriteCount } : Props) {
 
     return (
         <div className="min-h-screen bg-mist-800 text-white">
@@ -127,7 +137,7 @@ export default function Dashboard({ heroes, favoriteCount }) {
     );
 }
 
-Dashboard.layout = page => (
+Dashboard.layout = (page : React.ReactNode)=> (
     <AppLayout>
         {page}
     </AppLayout>

@@ -1,7 +1,10 @@
 import { Link, router, usePage } from '@inertiajs/react';
 
+type Props = {
+    children: React.ReactNode;
+};
 
-export default function AppLayout({ children }) {
+export default function AppLayout({ children } : Props) {
 
     const { auth } = usePage().props;
 

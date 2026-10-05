@@ -1,12 +1,65 @@
 import { Link, router } from "@inertiajs/react";
-import { formatMonth } from './../../../utils/date.js';
-import MatchupCard from "../../components/MatchupCard.jsx";
+import { formatMonth } from '../../../utils/date.js';
 import AppLayout from '@/layouts/AppLayout';
-import StartingItems from "../../components/StartingItems";
-import BuildItems from "../../components/BuildItems";
+import MatchupCard from "@/components/MatchupCard.tsx";
+import BuildItem from "@/components/BuildItem.tsx";
+import StartingItem from "@/components/StartingItem.tsx";
 
 
-export default function Show({ hero, counterPicks, goodAgainst, isFavorite }) {
+type Hero = {
+    image: string;
+    slug: string;
+    stratz_id: number;
+    starting_items: Array<{
+        id: number;
+        name: string;
+        image: string;
+        item: { display_name: string; image: string };
+        match_count: number;
+        wins_average: number;
+
+    }>;
+    items: Array<{
+        id: number;
+        name: string;
+        image: string;
+        item: { display_name: string; image: string };
+        match_count: number;
+        wins_average: number;
+
+    }>;
+    hero_stats: Array<{
+        id: number;
+        month: string;
+        winrate: number;
+        match_count: number;
+        win_count: number;
+    }>;
+}
+
+type Props = {
+    hero: Hero;
+    counterPicks: Array<{
+        id: number;
+        average_win: number;
+        opponent_hero: {
+            slug: string;
+            image: string;
+        };
+    }>;
+    goodAgainst: Array<{
+        id: number;
+        average_win: number;
+        opponent_hero: {
+            slug: string;
+            image: string;
+        };
+    }>;
+    isFavorite: boolean;
+}
+
+
+export default function Show({ hero, counterPicks, goodAgainst, isFavorite }: Props) {
     const latestStat = hero.hero_stats[0] ?? null;
     return (
         <div className="min-h-screen  bg-mist-800 text-white">
@@ -64,13 +117,13 @@ export default function Show({ hero, counterPicks, goodAgainst, isFavorite }) {
                         </div>
                     </div>
                 </div>
-
-                <StartingItems
+    
+                <StartingItem
                     items={hero.starting_items}
                 />
 
 
-                <BuildItems
+                <BuildItem
                     items={hero.items}
                 />
                 <MatchupCard matchups={counterPicks} label='Counter picks' />
@@ -139,7 +192,7 @@ export default function Show({ hero, counterPicks, goodAgainst, isFavorite }) {
     );
 }
 
-Show.layout = page => (
+Show.layout = (page: React.ReactNode) => (
     <AppLayout>
         {page}
     </AppLayout>

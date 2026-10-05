@@ -1,4 +1,16 @@
-export default function StartingItems({ items }) {
+type Item = Array<{ 
+    id: number; 
+    name: string; 
+    image: string; 
+    item: { display_name: string; image: string }; 
+    match_count: number; 
+    wins_average: number }>;
+
+type Props = {
+    items: Item;
+}
+
+export default function StartingItem({ items }: Props) {
     return (
         <div className="m-8">
             <h2 className="mb-4 text-2xl font-bold">

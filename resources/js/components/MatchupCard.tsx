@@ -1,7 +1,19 @@
 import { Link } from "@inertiajs/react";
 
-export default function MatchupCard({ matchups, label }) {
-    return (<div className="mt-0 mt-6">
+type Props = {
+    matchups: {
+        id: number;
+        average_win: number;
+        opponent_hero: {
+            slug: string;
+            image: string;
+        };
+    }[];
+    label: string;
+}
+
+export default function MatchupCard({ matchups, label }: Props) {
+    return (<div className="mt-6">
 
         <h1 className="mb-8 text-2xl font-bold">{label}</h1>
         <div className="grid grid-cols-3 gap-3">
