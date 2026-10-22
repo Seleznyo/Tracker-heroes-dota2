@@ -147,7 +147,7 @@ Laravel подключится к PostgreSQL внутри Docker и выполн
 
 После запуска контейнеров открой в браузере:
 
-**http://localhost:8000**
+**http://localhost:8080**
 
 ## Синхронизация данных со STRATZ API
 
